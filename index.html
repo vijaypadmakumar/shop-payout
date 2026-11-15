@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop Payout Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>Shop Payout Calculator</h1>
+      <p class="lede">Upload the Supplier Sales Analysis Report (.xlsx). Commission is Rs. 100 per case and Rs. 4.167 per bottle. The file is processed in your browser and never uploaded anywhere.</p>
+    </header>
+
+    <label id="drop" class="drop" for="file">
+      <input id="file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      <span class="drop-title">Choose or drop the .xlsx file</span>
+      <span id="drop-sub" class="drop-sub">One file per report</span>
+    </label>
+
+    <p id="status" class="status" role="status" hidden></p>
+
+    <section id="result" hidden>
+      <h2 id="report-title"></h2>
+      <dl class="stats">
+        <div><dt>Warehouses</dt><dd id="s-wh"></dd></div>
+        <div><dt>Shops</dt><dd id="s-shops"></dd></div>
+        <div><dt>Quantity</dt><dd id="s-qty"></dd></div>
+        <div><dt>Total commission</dt><dd id="s-total"></dd></div>
+      </dl>
+
+      <div id="warnings" class="warnings" hidden></div>
+
+      <div class="actions">
+        <button id="btn-download" type="button" class="primary">Download PDF</button>
+        <button id="btn-preview" type="button" aria-pressed="false">Show print preview</button>
+      </div>
+
+      <details id="excluded" class="excluded">
+        <summary id="excluded-sum"></summary>
+        <ul id="excluded-list"></ul>
+      </details>
+
+      <div id="preview" class="preview" hidden>
+        <iframe id="preview-frame" title="PDF print preview"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script src="vendor/read-excel-file.min.js"></script>
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="vendor/jspdf.plugin.autotable.min.js"></script>
+  <script src="payout.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
