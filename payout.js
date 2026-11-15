@@ -184,7 +184,7 @@
     });
 
     return {
-      title: 'Shop Wise Analysis ' + itemLabel + ' for ' + monthLabel,
+      title: monthLabel + ' Shop Purchase Analysis for ' + itemLabel,
       item: itemLabel,
       month: monthLabel,
       warehouses: list,

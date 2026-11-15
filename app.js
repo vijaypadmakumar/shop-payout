@@ -43,7 +43,7 @@
           report: report,
           blob: blob,
           url: URL.createObjectURL(blob),
-          filename: safeName('Shop Wise Analysis ' + report.item + ' ' + report.month) + '.pdf'
+          filename: report.month.toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') + '_SHOP_PURCHASE_ANALYSIS.pdf'
         };
         $('drop-sub').textContent = file.name + ' — choose another file to replace it';
         setStatus('');
