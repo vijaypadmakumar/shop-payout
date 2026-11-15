@@ -15,7 +15,7 @@
     warehouse: 'warehouse name',
     licensee: 'licensee name',
     item: 'item name',
-    indentDate: 'indent approve date',
+    invDate: 'inv/gtn date',
     cases: 'issue cases',
     bottles: 'issue bottles'
   };
@@ -129,7 +129,7 @@
       keptRows++;
       var item = norm(row[c.item]);
       if (item) items[item] = true;
-      var mon = parseMonth(row[c.indentDate]);
+      var mon = parseMonth(row[c.invDate]);
       if (mon) months[mon.year * 12 + mon.month] = true; else badDates++;
 
       var w = warehouses[wh] || (warehouses[wh] = { name: wh, shops: {} });
@@ -165,15 +165,15 @@
     var monthLabel;
     if (monthKeys.length === 0) {
       monthLabel = '(unknown month)';
-      warnings.push('Could not read any Indent Approve Date, so the month is unknown.');
+      warnings.push('Could not read any Inv/GTN Date, so the month is unknown.');
     } else {
       monthLabel = monthName(monthKeys[0]);
       if (monthKeys.length > 1) {
         monthLabel = monthName(monthKeys[0]) + ' – ' + monthName(monthKeys[monthKeys.length - 1]);
-        warnings.push('Indent Approve Dates span more than one month: ' + monthKeys.map(monthName).join(', ') + '.');
+        warnings.push('Inv/GTN Dates span more than one month: ' + monthKeys.map(monthName).join(', ') + '.');
       }
     }
-    if (badDates) warnings.push(badDates + ' shop row(s) have an unreadable Indent Approve Date (still included in totals).');
+    if (badDates) warnings.push(badDates + ' shop row(s) have an unreadable Inv/GTN Date (still included in totals).');
 
     var itemLabel = itemNames.length ? itemNames.join(' / ') : '(unknown item)';
     if (itemNames.length > 1) warnings.push('The file contains more than one Item Name: ' + itemNames.join(', ') + '. Totals combine all of them.');
