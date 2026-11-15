@@ -184,7 +184,7 @@
     });
 
     return {
-      title: 'Shop payout for ' + itemLabel + ' for the month of ' + monthLabel,
+      title: 'Shop Wise Analysis ' + itemLabel + ' for ' + monthLabel,
       item: itemLabel,
       month: monthLabel,
       warehouses: list,
@@ -210,8 +210,10 @@
       intFmt.format(bottles) + (bottles === 1 ? ' bottle' : ' bottles');
   }
 
+  function num(n) { return intFmt.format(n); }
+
   var api = {
-    process: process, money: money, qty: qty, parseQty: parseQty, parseMonth: parseMonth,
+    process: process, money: money, qty: qty, num: num, parseQty: parseQty, parseMonth: parseMonth,
     warehouseShort: warehouseShort, commissionPaise: commissionPaise,
     RATE_CASE: RATE_CASE, RATE_BOTTLE: RATE_BOTTLE
   };

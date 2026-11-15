@@ -1,11 +1,11 @@
-# Shop Payout Calculator
+# Shop Wise Analysis
 
-Static web page that turns a Supplier Sales Analysis Report (.xlsx) into a shop commission PDF.
+Static web page that turns a Supplier Sales Analysis Report (.xlsx) into a shop-wise quantity PDF.
 
-- Commission = 100 × Issue Cases + 4.167 × Issue Bottles, summed per shop, rounded to 2 decimals.
+- Issue Cases and Issue Bottles are summed per shop and shown in separate Cases and Bottles columns.
 - Grouped by warehouse (e.g. `WH-KOLLAM FL9-KLM-01/2026-27` → `WH-KOLLAM`).
 - Only licensees whose name starts with a 4–5 digit code (e.g. `2001-HQ KOLLAM`) are included.
-- Heading uses the Item Name and the month of the Indent Approve Date.
+- Heading reads "Shop Wise Analysis <Item Name> for <Month>", using the month of the Indent Approve Date.
 - Everything runs in the browser; the file is never uploaded.
 
 ## Run locally

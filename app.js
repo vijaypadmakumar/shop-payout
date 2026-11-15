@@ -43,7 +43,7 @@
           report: report,
           blob: blob,
           url: URL.createObjectURL(blob),
-          filename: safeName('Shop payout ' + report.item + ' ' + report.month) + '.pdf'
+          filename: safeName('Shop Wise Analysis ' + report.item + ' ' + report.month) + '.pdf'
         };
         $('drop-sub').textContent = file.name + ' — choose another file to replace it';
         setStatus('');
@@ -69,8 +69,8 @@
     $('report-title').textContent = r.title;
     $('s-wh').textContent = r.warehouses.length;
     $('s-shops').textContent = r.grand.shops;
-    $('s-qty').textContent = Payout.qty(r.grand.cases, r.grand.bottles);
-    $('s-total').textContent = 'Rs. ' + Payout.money(r.grand.paise);
+    $('s-cases').textContent = Payout.num(r.grand.cases);
+    $('s-bottles').textContent = Payout.num(r.grand.bottles);
 
     var w = $('warnings');
     w.innerHTML = '';
@@ -116,13 +116,7 @@
     doc.text(titleLines, pageW / 2, y + 6, { align: 'center' });
     y += 6 + titleLines.length * 18;
 
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    doc.setTextColor(95);
-    doc.text('Commission: Rs. ' + Payout.RATE_CASE + ' per case + Rs. ' + Payout.RATE_BOTTLE +
-      ' per bottle.  Generated ' + todayStr() + '.', pageW / 2, y, { align: 'center' });
-    doc.setTextColor(0);
-    y += 22;
+    y += 8;
 
     var tableStyles = {
       theme: 'grid',
@@ -132,8 +126,8 @@
       footStyles: { fillColor: [235, 240, 246], textColor: 20, fontStyle: 'bold' },
       columnStyles: {
         0: { cellWidth: 32, halign: 'right' },
-        2: { cellWidth: 150, halign: 'right' },
-        3: { cellWidth: 110, halign: 'right' }
+        2: { cellWidth: 80, halign: 'right' },
+        3: { cellWidth: 80, halign: 'right' }
       },
       showFoot: 'lastPage',
       rowPageBreak: 'avoid'
@@ -153,12 +147,11 @@
 
       doc.autoTable(Object.assign({}, tableStyles, {
         startY: y + 6,
-        head: [['#', 'Shop', 'Quantity', 'Commission (Rs.)']],
+        head: [['#', 'Shop', 'Cases', 'Bottles']],
         body: w.shops.map(function (s, i) {
-          return [i + 1, s.name, Payout.qty(s.cases, s.bottles), Payout.money(s.paise)];
+          return [i + 1, s.name, Payout.num(s.cases), Payout.num(s.bottles)];
         }),
-        foot: [[{ content: 'Total for ' + w.name, colSpan: 2 }, Payout.qty(w.total.cases, w.total.bottles),
-          Payout.money(w.total.paise)]],
+        foot: [[{ content: 'Total for ' + w.name, colSpan: 2 }, Payout.num(w.total.cases), Payout.num(w.total.bottles)]],
         didParseCell: rightAlignFoot,
         margin: { left: M, right: M, bottom: 50, top: M + 18 },
         didDrawPage: function (data) {
@@ -180,13 +173,13 @@
     doc.text('Summary by warehouse', M, y);
     doc.autoTable(Object.assign({}, tableStyles, {
       startY: y + 6,
-      head: [['#', 'Warehouse', 'Quantity', 'Commission (Rs.)']],
+      head: [['#', 'Warehouse', 'Cases', 'Bottles']],
       body: r.warehouses.map(function (w, i) {
         return [i + 1, w.name + '  (' + w.shops.length + (w.shops.length === 1 ? ' shop)' : ' shops)'),
-          Payout.qty(w.total.cases, w.total.bottles), Payout.money(w.total.paise)];
+          Payout.num(w.total.cases), Payout.num(w.total.bottles)];
       }),
       foot: [[{ content: 'Grand total (' + r.grand.shops + ' shops)', colSpan: 2 },
-        Payout.qty(r.grand.cases, r.grand.bottles), Payout.money(r.grand.paise)]],
+        Payout.num(r.grand.cases), Payout.num(r.grand.bottles)]],
       didParseCell: rightAlignFoot
     }));
 
